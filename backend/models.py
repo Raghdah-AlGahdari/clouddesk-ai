@@ -1,7 +1,6 @@
-from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey, func
-from sqlalchemy.orm import relationship
-
 from database import Base
+from sqlalchemy import Column, DateTime, ForeignKey, Integer, String, Text, func
+from sqlalchemy.orm import relationship
 
 
 class User(Base):
@@ -12,7 +11,9 @@ class User(Base):
     email = Column(String(255), unique=True, index=True, nullable=False)
     password_hash = Column(String(255), nullable=False)
     role = Column(String(20), nullable=False, default="user")
-    created_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
+    created_at = Column(
+        DateTime(timezone=True), nullable=False, server_default=func.now()
+    )
 
     tickets = relationship("Ticket", back_populates="user")
 
@@ -26,6 +27,8 @@ class Ticket(Base):
     priority = Column(String(10), nullable=False, default="medium")
     status = Column(String(20), nullable=False, default="open")
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False, index=True)
-    created_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
+    created_at = Column(
+        DateTime(timezone=True), nullable=False, server_default=func.now()
+    )
 
     user = relationship("User", back_populates="tickets")
