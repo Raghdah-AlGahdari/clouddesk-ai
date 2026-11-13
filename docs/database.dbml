@@ -1,0 +1,21 @@
+
+Table users {
+  id integer [primary key, increment]
+  full_name varchar(100) [not null]
+  email varchar(255) [not null, unique]
+  password_hash varchar(255) [not null]
+  role varchar(20) [not null, default: 'user']
+  created_at timestamp [not null, default: `now()`]
+}
+
+Table tickets {
+  id integer [primary key, increment]
+  title varchar(200) [not null]
+  description text [not null]
+  priority varchar(10) [not null, default: 'Medium']
+  status varchar(20) [not null, default: 'Open']
+  user_id integer [not null]
+  created_at timestamp [not null, default: `now()`]
+}
+
+Ref user_tickets: tickets.user_id > users.id // one to many 
