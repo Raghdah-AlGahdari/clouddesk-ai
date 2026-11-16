@@ -13,7 +13,7 @@ from sqlalchemy.orm import Session
 # Create all tables
 Base.metadata.create_all(bind=engine)
 
-app = FastAPI()
+app = FastAPI(title="CloudDesk AI API", version="0.1.0")
 bearer_scheme = HTTPBearer()
 
 
