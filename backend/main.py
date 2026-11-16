@@ -1,6 +1,9 @@
+import jwt
 import models  # noqa: F401  (needed so SQLAlchemy knows the User and Ticket tables)
+from config import settings
 from database import Base, engine, get_db
 from fastapi import Depends, FastAPI, HTTPException
+from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from models import User
 from schemas import LoginRequest, Token, UserCreate, UserResponse
 from security import create_access_token, hash_password, verify_password
@@ -11,6 +14,37 @@ from sqlalchemy.orm import Session
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
+bearer_scheme = HTTPBearer()
+
+
+def get_current_user(
+    credentials: HTTPAuthorizationCredentials = Depends(bearer_scheme),  # noqa: B008
+    db: Session = Depends(get_db),  # noqa: B008
+) -> User:
+    # 1. Take the token out of the "Authorization: Bearer <token>" header
+    token = credentials.credentials
+
+    # 2. Check the stamp (signature) and expiry, then read the user id
+    try:
+        payload = jwt.decode(
+            token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM]
+        )
+        user_id = int(payload.get("sub"))
+    except (jwt.InvalidTokenError, TypeError, ValueError):
+        raise HTTPException(status_code=401, detail="Invalid or expired token")
+
+    # 3. Find the user in the database
+    user = db.get(User, user_id)
+    if not user:
+        raise HTTPException(status_code=401, detail="User not found")
+
+    # 4. Give the user to the endpoint that asked for it
+    return user
+
+
+@app.get("/me", response_model=UserResponse)
+def me(current_user: User = Depends(get_current_user)):  # noqa: B008
+    return current_user
 
 
 @app.get("/hello")
