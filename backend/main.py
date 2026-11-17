@@ -4,8 +4,15 @@ from config import settings
 from database import Base, engine, get_db
 from fastapi import Depends, FastAPI, HTTPException
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
-from models import User
-from schemas import LoginRequest, Token, UserCreate, UserResponse
+from models import Ticket, User
+from schemas import (
+    LoginRequest,
+    TicketCreate,
+    TicketResponse,
+    Token,
+    UserCreate,
+    UserResponse,
+)
 from security import create_access_token, hash_password, verify_password
 from sqlalchemy import select, text
 from sqlalchemy.orm import Session
@@ -90,3 +97,33 @@ def login(login_data: LoginRequest, db: Session = Depends(get_db)):  # noqa: B00
         raise HTTPException(status_code=401, detail="Incorrect email or password")
     token = create_access_token(user.id)
     return Token(access_token=token)
+
+
+@app.post("/tickets", response_model=TicketResponse, status_code=201)
+def create_ticket(
+    ticket_data: TicketCreate,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):  # noqa: B008
+    new_ticket = Ticket(
+        title=ticket_data.title,
+        description=ticket_data.description,
+        priority=ticket_data.priority,
+        user_id=current_user.id,
+    )
+    db.add(new_ticket)
+    db.commit()
+    db.refresh(new_ticket)
+    return new_ticket
+
+
+@app.get("/tickets", response_model=list[TicketResponse])
+def list_my_tickets(
+    current_user: User = Depends(get_current_user), db: Session = Depends(get_db)
+):  # noqa: B008
+    tickets = (
+        db.execute(select(Ticket).where(Ticket.user_id == current_user.id))
+        .scalars()
+        .all()
+    )
+    return tickets
