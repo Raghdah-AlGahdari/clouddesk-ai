@@ -24,3 +24,31 @@ if (registerForm) {
         }
     });
 }
+
+const loginForm = document.getElementById("loginForm");
+if (loginForm) {
+    loginForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const formData = new FormData(loginForm);
+        const data = Object.fromEntries(formData.entries());
+        const message = document.getElementById("message");
+        const response = await fetch(`${API_URL}/login`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        });
+        const result = await response.json();
+        if (response.ok) {
+            localStorage.setItem("access_token", result.access_token);
+            message.textContent = "Login successful!";
+            message.style.color = "green";
+            // Redirect to the dashboard or another page
+            window.location.href = "tickets.html"; // Change this to your desired page
+        } else {
+            message.textContent= typeof result.detail === "string" ? result.detail : "Please check your details and try again.";
+            message.style.color = "red";
+        }
+    });
+}   
