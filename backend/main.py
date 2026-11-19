@@ -16,12 +16,20 @@ from schemas import (
 from security import create_access_token, hash_password, verify_password
 from sqlalchemy import select, text
 from sqlalchemy.orm import Session
+from fastapi.middleware.cors import CORSMiddleware
 
 # Create all tables
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="CloudDesk AI API", version="0.1.0")
 bearer_scheme = HTTPBearer()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5500"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 def get_current_user(
