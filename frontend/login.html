@@ -4,23 +4,46 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Log in | CloudDesk AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="logo.svg" type="image/svg+xml">
 
 </head>
 <body>
-    <h1>Log in to CloudDesk</h1>
-    <form id="loginForm">
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required><br><br>
+    <div class="split">
 
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" minlength="8" required><br><br>
+        <!--LEFT half- brand and welcome -->
+        <section class="split-brand">
+            <p class="brand"><img src="logo-white.svg" alt="" width="32" height="32"> CloudDesk AI</p>
+            <h1>IT support, without the back-and-forth.</h1>
+            <p>Log a request in a minute and track it until it's fixed.</p>
+            <ul>
+                <li>Track every request in one place</li>
+                <li>Clear status from open to resolved</li>
+                <li>AI suggestions for category and priority (coming soon)</li>
+            </ul>
+        </section>
+        <!--RIGHT half- login form -->
+        <section class="split-form">
+            <form id="loginForm" class="card">
+                <h2>Welcome back</h2>
+                <p class="subtitle">Log in to see and submit your IT tickets.</p>
 
-        <button type="submit">Log in</button>
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="name@company.com" required>
 
-        <p id="message"></p>
-        <a href="register.html">Don't have an account? Sign up</a>
-    </form>
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+
+                <button type="submit">Log in</button>
+                <p id="message"></p>
+
+                <p class="form-link">New here? <a href="register.html">Create an account</a></p>
+            </form>
+        </section>
+
+    </div>
+
     <script src="app.js"></script>
 </body>
 </html>

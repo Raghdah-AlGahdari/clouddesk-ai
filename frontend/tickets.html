@@ -4,27 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My tickets | CloudDesk AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="logo.svg" type="image/svg+xml">
 
 </head>
 <body>
     <h1>My tickets</h1>
-    <button id="logoutButton">Log out</button>
+    <button id="logoutButton" class="btn-secondary">Log out</button>
     <p>Welcome to your tickets page!</p>
     <form id="ticketForm">
         <h2>Create a new ticket</h2>
          <label for="title">Title:</label>
-        <input type="text" id="title" name="title" required><br><br>
+        <input type="text" id="title" name="title" required>
 
         <label for="description">Description:</label>
-        <textarea id="description" name="description" required></textarea><br><br>
+        <textarea id="description" name="description" required></textarea>
 
         <label for="priority">Priority:</label>
         <select id="priority" name="priority" required>
             <option value="low">Low</option>
             <option value="medium" selected>Medium</option>
             <option value="high">High</option>
-        </select><br><br>
+        </select>
 
         <button type="submit">Create Ticket</button>
         <p id="message"></p>
