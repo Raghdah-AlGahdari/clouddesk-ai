@@ -84,3 +84,88 @@ button {
     min-height: 20px;
     color: var(--color-text-muted);
 }
+.split{
+    display: flex;
+    min-height: 100vh;
+}
+.split-brand{
+    flex:1;
+    background:#0F172A;
+    color: #F8FAFC;
+    padding: 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.split-form{
+    flex:1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+}
+.split-form .card{
+    max-width: 400px;
+    width: 100%;
+}
+.brand{
+    font-size: 17px;
+    font-weight: 600;
+    margin: 0 0 48px;
+    disoplay: flex;
+    align-items: center;
+    gap:10px;
+}
+
+.split-brand h1{
+    font-size: 40px;
+    line-height: 1.15;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    max-width: 460px;
+    margin: 0 0 16px;
+}
+
+.split-brand p{
+    color: #CBD5E1;
+    font-size: 16px;
+    line-height: 1.6;
+    max-width: 460px;
+}
+.split-brand ul{
+    padding-left: 20px;
+     color: #E2E8F0;
+     line-height: 2;
+}
+.card h2{
+    margin: 0 0 6px;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.subtitle{
+    margin: 0 0 24px;
+    font-size: 14px;
+    color: var(--color-text-muted);
+}
+
+.form-link{
+    text-align: center;
+    font-size: 14px;
+    color: var(--color-text-muted);
+    margin: 16px 0 0;
+}
+
+a{
+    color: var(--color-accent);
+}
+
+.card button{
+    width: 100%;
+}
+
+@media (max-width: 800px) {
+    .split {
+        flex-direction: column;
+    }
+}
