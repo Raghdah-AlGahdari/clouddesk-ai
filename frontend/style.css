@@ -1,0 +1,21 @@
+:root{
+    --color-bg:#F6F7F9;
+    --color-surface:#FFFFFF;
+    --color-border:#E5E7EB;
+    --color-input-border:#D1D5DB;
+    --color-text:#0F172A;
+    --color-text-secondary:#475569;
+    --color-text-muted:#64748B;
+    --color-accent:#2563EB;
+    --radius:8px;
+    --radius-card:12px;
+    --font:Inter, system-ui, sans-serif;
+
+
+}
+body{
+    margin:0;
+    font-family:var(--font);
+    background-color:var(--color-bg);
+    color:var(--color-text);
+}
