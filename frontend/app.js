@@ -78,11 +78,31 @@ if (ticketForm) {
             const tickets = await response.json();
             const ticketList = document.getElementById("ticketList");
             ticketList.innerHTML = "";
-            // Add one <li> for each ticket
             for (const ticket of tickets) {
-                const item = document.createElement("li");
-                item.textContent = `${ticket.title} - ${ticket.priority} - ${ticket.status}`;
-                ticketList.appendChild(item);
+                // a new row
+                const row = document.createElement("tr");
+                //cell1:title
+                const titleCell = document.createElement("td");
+                titleCell.textContent = ticket.title;
+                row.appendChild(titleCell);
+                // cell 2: priority, with a badge
+                const priorityCell = document.createElement("td");
+                const priorityBadge = document.createElement("span");
+                priorityBadge.className = `badge ${ticket.priority.toLowerCase()}`;
+                priorityBadge.textContent = ticket.priority;
+                priorityCell.appendChild(priorityBadge);
+                row.appendChild(priorityCell);
+
+                // cell 3: status, with a badge
+                const statusCell = document.createElement("td");
+                const statusBadge = document.createElement("span");
+                statusBadge.className = `badge ${ticket.status.toLowerCase()}`;
+                statusBadge.textContent = ticket.status;
+                statusCell.appendChild(statusBadge);
+                row.appendChild(statusCell);
+
+                ticketList.appendChild(row);
+
             }
         }
         // 3. Show the tickets as soon as the page opens
