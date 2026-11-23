@@ -84,40 +84,45 @@ button {
     min-height: 20px;
     color: var(--color-text-muted);
 }
-.split{
+
+.split {
     display: flex;
     min-height: 100vh;
 }
-.split-brand{
-    flex:1;
-    background:#0F172A;
+
+.split-brand {
+    flex: 1;
+    background: #0F172A;
     color: #F8FAFC;
     padding: 48px;
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
-.split-form{
-    flex:1;
+
+.split-form {
+    flex: 1;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 24px;
 }
-.split-form .card{
+
+.split-form .card {
     max-width: 400px;
     width: 100%;
 }
-.brand{
+
+.brand {
     font-size: 17px;
     font-weight: 600;
     margin: 0 0 48px;
-    disoplay: flex;
+    display: flex;
     align-items: center;
-    gap:10px;
+    gap: 10px;
 }
 
-.split-brand h1{
+.split-brand h1 {
     font-size: 40px;
     line-height: 1.15;
     font-weight: 600;
@@ -126,46 +131,188 @@ button {
     margin: 0 0 16px;
 }
 
-.split-brand p{
+.split-brand p {
     color: #CBD5E1;
     font-size: 16px;
     line-height: 1.6;
     max-width: 460px;
 }
-.split-brand ul{
+
+.split-brand ul {
     padding-left: 20px;
-     color: #E2E8F0;
-     line-height: 2;
+    color: #E2E8F0;
+    line-height: 2;
 }
-.card h2{
+
+.card h2 {
     margin: 0 0 6px;
     font-size: 24px;
     font-weight: 600;
 }
 
-.subtitle{
+.subtitle {
     margin: 0 0 24px;
     font-size: 14px;
     color: var(--color-text-muted);
 }
 
-.form-link{
+.form-link {
     text-align: center;
     font-size: 14px;
     color: var(--color-text-muted);
     margin: 16px 0 0;
 }
 
-a{
+a {
     color: var(--color-accent);
 }
 
-.card button{
+.card button {
     width: 100%;
 }
 
+.app {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 240px;
+    background: var(--color-surface);
+    border-right: 1px solid var(--color-border);
+    padding: 24px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+}
+
+.logo img {
+    width: 32px;
+    height: 32px;
+}
+
+#logoutButton {
+    margin-top: auto;
+}
+
+.content {
+    flex: 1;
+    padding: 32px 40px;
+}
+
+.nav-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.nav-links a {
+    display: block;
+    padding: 10px;
+    border-radius: var(--radius);
+    color: var(--color-text);
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.nav-links a.active {
+    background: #EEF2FF;
+    color: var(--color-accent);
+    font-weight: 500;
+}
+
+.content-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 24px;
+    align-items: start;
+}
+
+/* Table*/
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+th {
+    text-align: left;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-text-muted);
+    padding: 12px;
+}
+
+td {
+    padding: 14px 12px;
+    border-top: 1px solid #F1F5F9;
+}
+
+/* Badges */
+.badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: capitalize;
+    white-space: nowrap;
+}
+
+/* Priority colours */
+.badge.high   { background: #FEE2E2; color: #B91C1C; }
+.badge.medium { background: #FEF3C7; color: #92400E; }
+.badge.low    { background: #F1F5F9; color: #334155; }
+
+/* Status colours */
+.badge.open        { background: #DBEAFE; color: #1D4ED8; }
+.badge.in_progress { background: #EDE9FE; color: #5B21B6; }
+.badge.closed      { background: #DCFCE7; color: #15803D; }
+
+/* Text sizes*/
+.content h1 {
+    margin: 0 0 4px;
+    font-size: 26px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+}
+
+.content > p {
+    margin: 0 0 24px;
+    color: var(--color-text-secondary);
+    font-size: 14px;
+}
+
+.content .card h2 {
+    font-size: 16px;
+    margin: 0 0 12px;
+}
 @media (max-width: 800px) {
+
+    .app,
     .split {
         flex-direction: column;
+    }
+
+    .content-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .sidebar {
+        width: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--color-border);
     }
 }
