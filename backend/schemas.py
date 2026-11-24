@@ -23,6 +23,13 @@ class TicketCreate(BaseModel):
     title: str = Field(max_length=200)
     description: str
     priority: Literal["low", "medium", "high"] = "medium"
+    category_id: int 
+
+
+class CategoryResponse(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+    id: int
+    name: str
 
 
 class TicketResponse(BaseModel):
@@ -34,6 +41,7 @@ class TicketResponse(BaseModel):
     status: Literal["open", "in_progress", "closed"]
     user_id: int
     created_at: datetime
+    category: CategoryResponse | None = None
 
 class LoginRequest(BaseModel):
     email: EmailStr
@@ -42,3 +50,4 @@ class LoginRequest(BaseModel):
 class Token(BaseModel):
     access_token:str
     token_type: str = "bearer"
+

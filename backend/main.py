@@ -4,7 +4,7 @@ from config import settings
 from database import Base, engine, get_db
 from fastapi import Depends, FastAPI, HTTPException
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
-from models import Ticket, User
+from models import Ticket, User, Category
 from schemas import (
     LoginRequest,
     TicketCreate,
@@ -12,6 +12,7 @@ from schemas import (
     Token,
     UserCreate,
     UserResponse,
+    CategoryResponse
 )
 from security import create_access_token, hash_password, verify_password
 from sqlalchemy import select, text
@@ -76,6 +77,10 @@ def health_check(db: Session = Depends(get_db)):  # noqa: B008
     except Exception:  # noqa: BLE001
         raise HTTPException(status_code=503, detail="database unavailable")
 
+@app.get("/categories", response_model=list[CategoryResponse])
+def list_categories(db: Session = Depends(get_db)):  # noqa: B008
+    categories = db.execute(select(Category).order_by(Category.name)).scalars().all()
+    return categories
 
 @app.post("/register", response_model=UserResponse, status_code=201)
 def register(user_data: UserCreate, db: Session = Depends(get_db)):  # noqa: B008
@@ -114,12 +119,19 @@ def create_ticket(
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db),
 ):  # noqa: B008
+
+    # 1. Check the category exists BEFORE saving anything
+    if db.get(Category, ticket_data.category_id) is None:
+        raise HTTPException(status_code=400, detail="Invalid category_id")
+        # 2. Build the ticket
     new_ticket = Ticket(
         title=ticket_data.title,
         description=ticket_data.description,
         priority=ticket_data.priority,
         user_id=current_user.id,
+        category_id=ticket_data.category_id
     )
+    # 3. Save it to the database
     db.add(new_ticket)
     db.commit()
     db.refresh(new_ticket)
