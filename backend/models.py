@@ -27,8 +27,17 @@ class Ticket(Base):
     priority = Column(String(10), nullable=False, default="medium")
     status = Column(String(20), nullable=False, default="open")
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False, index=True)
+    category_id = Column(Integer, ForeignKey("categories.id"), nullable=True, index=True)
     created_at = Column(
         DateTime(timezone=True), nullable=False, server_default=func.now()
     )
 
     user = relationship("User", back_populates="tickets")
+    category = relationship("Category", back_populates="tickets")
+
+class Category(Base):
+    __tablename__ = "categories"
+    id = Column(Integer, primary_key=True)
+    name = Column(String(50), unique=True, nullable=False)
+    
+    tickets = relationship("Ticket", back_populates="category")

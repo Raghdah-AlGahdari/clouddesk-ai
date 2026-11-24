@@ -37,6 +37,7 @@
                                 <th>Ticket</th>
                                 <th>Priority</th>
                                 <th>Status</th>
+                                <th>Category</th>
                             </tr>
                         </thead>
                         <tbody id="ticketList"></tbody>
@@ -50,6 +51,11 @@
 
                         <label for="description">Description:</label>
                         <textarea id="description" name="description" required></textarea>
+
+                        <label for="category">Category</label>
+                        <select id="category" name="category_id" required>
+                            <option value="">Choose a category</option>
+                        </select>
 
                         <label for="priority">Priority:</label>
                         <select id="priority" name="priority" required>

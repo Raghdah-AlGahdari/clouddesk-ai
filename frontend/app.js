@@ -101,12 +101,33 @@ if (ticketForm) {
                 statusCell.appendChild(statusBadge);
                 row.appendChild(statusCell);
 
-                ticketList.appendChild(row);
+                // cell 4: category
+                const categoryCell = document.createElement("td");
+                categoryCell.textContent = ticket.category ? ticket.category.name : "—";
+                row.appendChild(categoryCell);
 
+                ticketList.appendChild(row);
+            }
+        }
+
+        //fill the category dropdown from the API
+        async function loadCategories() {
+            // /categories is public, so no token is needed
+            const response = await fetch(`${API_URL}/categories`);
+            const categories = await response.json();
+            const categorySelect = document.getElementById("category");
+
+            // Add one <option> per category, AFTER the "Choose a category" placeholder
+            for (const category of categories) {
+                const option = document.createElement("option");
+                option.value = category.id;          // what gets SENT (e.g. 1)
+                option.textContent = category.name;  // what the user SEES (e.g. Hardware)
+                categorySelect.appendChild(option);
             }
         }
         // 3. Show the tickets as soon as the page opens
         loadTickets();
+        loadCategories();
         // ADD THE LOG OUT CODE HERE
         const logoutButton = document.getElementById("logoutButton");
         logoutButton.addEventListener("click", () => {
