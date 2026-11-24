@@ -66,6 +66,9 @@ def me(current_user: User = Depends(get_current_user)):  # noqa: B008
 async def hello():
     return {"message": "Hello, World!"}
 
+@app.get("/health")
+def health():
+    return {"status": "ok"}
 
 @app.get("/health/db")
 def health_check(db: Session = Depends(get_db)):  # noqa: B008
