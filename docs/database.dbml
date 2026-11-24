@@ -12,10 +12,18 @@ Table tickets {
   id integer [primary key, increment]
   title varchar(200) [not null]
   description text [not null]
-  priority varchar(10) [not null, default: 'Medium']
-  status varchar(20) [not null, default: 'Open']
+  priority varchar(10) [not null, default: 'medium']
+  status varchar(20) [not null, default: 'open']
   user_id integer [not null]
+  category_id integer [not null]
   created_at timestamp [not null, default: `now()`]
 }
 
+Table categories{
+    id integer [primary key, increment]
+    name varchar(50) [not null, unique]
+ 
+}
+
 Ref user_tickets: tickets.user_id > users.id // one to many 
+Ref ticket_category: tickets.category_id > categories.id //many to one
