@@ -55,6 +55,11 @@ def get_current_user(
     # 4. Give the user to the endpoint that asked for it
     return user
 
+def require_staff(current_user: User = Depends(get_current_user)) -> User:  # noqa: B008
+    if current_user.role not in ["agent", "admin"]:
+        raise HTTPException(status_code=403, detail="Staff access required")
+    return current_user
+
 
 @app.get("/me", response_model=UserResponse)
 def me(current_user: User = Depends(get_current_user)):  # noqa: B008
@@ -144,6 +149,19 @@ def list_my_tickets(
 ):  # noqa: B008
     tickets = (
         db.execute(select(Ticket).where(Ticket.user_id == current_user.id))
+        .scalars()
+        .all()
+    )
+    return tickets
+
+
+@app.get("/admin/tickets", response_model=list[TicketResponse])
+def list_all_tickets(
+    current_user: User = Depends(require_staff),  # noqa: B008
+     db: Session = Depends(get_db)  # noqa: B008
+): 
+    tickets = (
+        db.execute(select(Ticket).order_by(Ticket.created_at.desc()))
         .scalars()
         .all()
     )
